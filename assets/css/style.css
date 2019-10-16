@@ -1,0 +1,70 @@
+html {
+    height: 100%;
+}
+body {
+    height: 100%;
+}
+
+.bg-color {
+    color: white;
+    background-color: red;
+
+}
+li {
+    padding: 5px;
+    font-size: small;
+    list-style: none;
+}
+.outerbox{
+    width: 75%;
+    height: 100%;
+}
+
+.boxes {
+    height: auto;
+    width: 100px;
+}
+
+.header {
+    height: 20%;
+    width: 60%;
+    /*background-color: green;*/
+}
+
+.resultsBox {
+    height: 100%;
+}
+
+.border {
+
+    border: 2px solid black;
+}
+/*Responsive code*/
+/* small devices */
+@media (min-width: 0px) {
+    .header {
+        font-size: 20px;
+    }
+}
+
+@media (min-width: 576px) {
+    .header {
+        font-size: 20px;
+    }
+}
+
+
+/*Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+
+}
+
+/*Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) {
+
+}
+
+/*Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+
+}
