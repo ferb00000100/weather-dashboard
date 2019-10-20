@@ -15,15 +15,6 @@ li {
     font-size: small;
     list-style: none;
 }
-.outerbox{
-    width: 75%;
-    height: 100%;
-}
-
-.boxes {
-    height: auto;
-    width: 100px;
-}
 
 .header {
     height: 20%;
@@ -31,19 +22,19 @@ li {
     /*background-color: green;*/
 }
 
-.resultsBox {
-    height: 100%;
-}
-
 .border {
 
     border: 2px solid black;
 }
+
 /*Responsive code*/
 /* small devices */
 @media (min-width: 0px) {
     .header {
         font-size: 20px;
+    }
+    h1 {
+        text-align: center;
     }
 }
 
