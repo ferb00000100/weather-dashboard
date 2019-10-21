@@ -246,7 +246,7 @@ $(document).ready(function () {
 		getForecast(lastCity);
 	}
 
-	// Init will grab the default city, Denver and load the page
+	// Init will grab the last searched city on load
 	init(retrieveCities());
 	// init(defaultCity);
 	// init();
