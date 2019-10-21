@@ -11,6 +11,7 @@ $(document).ready(function () {
 	function getTemp(city) {
 
 		//  You have to clear the current city so they don't stack on top of each other
+		$("#icon").empty();
 		$("#currentCity").empty();
 		var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + apiKey;
 
@@ -19,6 +20,11 @@ $(document).ready(function () {
 			url: queryURL,
 			method: "GET"
 		}).then(function (response) {
+			// console.log(response);
+			var iconcode = response.weather[0].icon;
+			var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
+			var image = $('<img>');
+			image.attr({src: iconurl, id:'icon'});
 
 			// Create a h4 tag and write the current date from our global variable above
 			var cityName = $('<h4>').text(response.name + ' (' + date + ')');
@@ -32,18 +38,22 @@ $(document).ready(function () {
 			var humidity = $('<li>').text("Humidity: " + response.main.humidity + "%");
 			var wind = $('<li>').text("Wind Speed: " + response.wind.speed);
 
-
+			$('#icon').append(image);
 			// Write the city name to the currentCity DIV
 			$('#currentCity').append(cityName);
-
 			// Attach the selectedCity <ul> tag to the currentCity DIV and add a class of border
 			$('#currentCity').append(selectedCity);
-			$('#currentCity').addClass('border');
+			// $('#currentCity').addClass('border');
 
 			// Append the temp, humidity and wind speed on to the page
-			$('.cityInfo').append(temp);
-			$('.cityInfo').append(humidity);
-			$('.cityInfo').append(wind);
+			$('#icon').append(temp);
+			$('#icon').append(humidity);
+			$('#icon').append(wind);
+
+			// $('.cityInfo').append(temp);
+			// $('.cityInfo').append(humidity);
+			// $('.cityInfo').append(wind);
+
 
 			// Grab the latitude and longitude to be used for the UV API
 			var lat = response.coord.lat;
@@ -68,7 +78,7 @@ $(document).ready(function () {
 				var uv = $('<li>').text("UV Index: " + response.value);
 				uv.addClass('bg-color');
 				// $('.cityInfo').append("UV Index: ");
-				$('.cityInfo').append(uv);
+				$('#icon').append(uv);
 			});
 
 		});
@@ -83,7 +93,7 @@ $(document).ready(function () {
 
 		const cleanedResponses = response.filter(function (reading) {
 			const date = getDate(reading.dt_txt);
-			// console.log("date is " + date);
+
 			if (!map[date]) {
 				map[date] = true;
 				return true;
@@ -108,7 +118,7 @@ $(document).ready(function () {
 			url: fiveDayURL,
 			method: "GET"
 		}).then(function (response) {
-			// console.log(response);
+			// console.log(response.list[0].weather[0].icon)
 
 			// The API returns the 5 day forecast and 3 hour windows for each day.  We only want One and not every 3
 			// hours.  We have to filter out and grab one response for each day. The cleanResponse function does that.
@@ -134,12 +144,19 @@ $(document).ready(function () {
 					.format('MM/D/YYYY'));
 				dailyInfoDiv.append(dailyDate);
 
+				var iconcode = response.list[i].weather[0].icon;
+				// console.log(iconcode);
+				var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
 				var dailyList = $('<ul>');
 				dailyList.addClass('dailyList');
 				dailyInfoDiv.append(dailyList);
 
+				var image = $('<img>');
+				image.attr('src', iconurl);
 				var dayTemp = $('<li>').text("Temp: " + record.main.temp + ' \xB0F');
 				var dayHumidity = $('<li>').text("Humidity: " + record.main.humidity + '%');
+
+				dailyList.append(image);
 				dailyList.append(dayTemp);
 				dailyList.append(dayHumidity);
 				$('#fiveDayForecast').append(dailyInfoDiv);
@@ -214,21 +231,25 @@ $(document).ready(function () {
 				var selectedCity = $('<li>').text(keys[i]);
 				selectedCity.attr({type: 'button', class:'savedCity', name:keys[i]});
 				$('#cities').append(selectedCity);
+
 			}
-		}
+
+			}
+		var lastCity = keys[0];
+		return lastCity;
 	}
 
 	// Loads Denver as the default city when the page loads.
-	function init(denver) {
+	function init(lastCity) {
 
-		getTemp(denver);
-		getForecast(denver);
-
+		getTemp(lastCity);
+		getForecast(lastCity);
 	}
 
 	// Init will grab the default city, Denver and load the page
-	init(defaultCity);
-	retrieveCities();
+	init(retrieveCities());
+	// init(defaultCity);
+	// init();
 	getCity();
 
 });
