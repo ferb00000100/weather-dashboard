@@ -13,7 +13,7 @@ $(document).ready(function () {
 		//  You have to clear the current city so they don't stack on top of each other
 		$("#icon").empty();
 		$("#currentCity").empty();
-		var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + apiKey;
+		var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + apiKey;
 
 		// The ajax call to grab the current weather conditions
 		$.ajax({
@@ -22,7 +22,7 @@ $(document).ready(function () {
 		}).then(function (response) {
 			// console.log(response);
 			var iconcode = response.weather[0].icon;
-			var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
+			var iconurl = "https://openweathermap.org/img/w/" + iconcode + ".png";
 			var image = $('<img>');
 			image.attr({src: iconurl, id:'icon'});
 
@@ -60,7 +60,7 @@ $(document).ready(function () {
 			var lon = response.coord.lon;
 
 			// Set the UV API URL
-			var uvURL = "http://api.openweathermap.org/data/2.5/uvi?appid=" + apiKey + "&lat=" + lat + "&lon=" + lon;
+			var uvURL = "https://api.openweathermap.org/data/2.5/uvi?appid=" + apiKey + "&lat=" + lat + "&lon=" + lon;
 
 			// Ajax call to grab UV data
 			$.ajax({
@@ -111,7 +111,7 @@ $(document).ready(function () {
 		$("#fiveDayForecast").empty();
 
 		// Set the 5 day forecast URL
-		var fiveDayURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=" + apiKey;
+		var fiveDayURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=" + apiKey;
 
 		// Ajax call to grab the 5 day forecast
 		$.ajax({
@@ -146,7 +146,7 @@ $(document).ready(function () {
 
 				var iconcode = response.list[i].weather[0].icon;
 				// console.log(iconcode);
-				var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
+				var iconurl = "https://openweathermap.org/img/w/" + iconcode + ".png";
 				var dailyList = $('<ul>');
 				dailyList.addClass('dailyList');
 				dailyInfoDiv.append(dailyList);
@@ -247,7 +247,7 @@ $(document).ready(function () {
 	}
 
 	// Init will grab the last searched city on load
-	init(retrieveCities());
+	init(retrieveCities() || defaultCity);
 	// init(defaultCity);
 	// init();
 	getCity();
